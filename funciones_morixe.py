@@ -2,7 +2,7 @@ from PIL import Image
 import math
 import numpy as np
 
-#holas osjsdif
+
 #funcion para abrir imagen y verificar que sea png
 def cargar_imagen(ruta):
     try:
