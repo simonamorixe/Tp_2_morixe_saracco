@@ -11,12 +11,19 @@ def cargar_imagen(ruta):
     except:
         print("No se pudo abrir la imagen.")
         return None
-    
 
+ 
+def medidas(imagen):
+    """
+    La funcion medidias busca el ancho y el alto de la imagen a partir de una funcion de la libreria pillow
+    Retorna estos parametros para luego usarlos en otras funciones
+    """
+    ancho, alto= imagen.size()
+    return ancho, alto 
 
 """
 tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
-el dot_size y el angle_deg te lo da el usuario como input. 
+el dot_size y el angle_deg te lo da el usuario como input.
 el usuario tambien nos dice que tipo de filtro le quiere poner
 """
 
