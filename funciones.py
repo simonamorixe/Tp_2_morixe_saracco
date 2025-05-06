@@ -9,7 +9,7 @@ imagen = Image.open(ruta)
 imagen.show()
 
 """
-tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlso despues en la funcion de halftone
+tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
 el dot_size y el angle_deg te lo da el usuario como input. 
 el usuario tambien nos dice que tipo de filtro le quiere poner
 """
