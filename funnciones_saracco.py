@@ -3,10 +3,17 @@ import math
 import numpy as np
 
 
-#para que el usuario ingrese una imagen
-ruta = input("Ingrese ruta de la imagen: ") 
-imagen = Image.open(ruta)
-imagen.show()
+#holas osjsdif
+#funcion para abrir imagen y verificar que sea png
+def cargar_imagen(ruta):
+    try:
+        imagen = Image.open(ruta)
+        return imagen
+    except:
+        print("No se pudo abrir la imagen.")
+        return None
+    
+
 
 """
 tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
