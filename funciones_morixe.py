@@ -21,11 +21,15 @@ def medidas(imagen):
     ancho, alto= imagen.size()
     return ancho, alto 
 
+
+#-----------------------------------------------------------------------------
+
 """
 tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
 el dot_size y el angle_deg te lo da el usuario como input.
 el usuario tambien nos dice que tipo de filtro le quiere poner
 """
+
 
 #FILTRO HALFTONE
 def get_grid_coords(h, w, dot_size, angle_deg):

@@ -1,20 +1,30 @@
-
+from PIL import Image
+import math
+import numpy as np
+import funciones_morixe
+import random
 
 
  
 # c
 
 def main():
-   ruta_imagen = input("Ingrese la ruta de la imagen: ") 
-   # meter adentro lo que pide
+   #Se solicita al usuario que ingrese la ruta de la imagen
+   ruta_imagen = input("Ingrese la ruta de la imagen: ")
+   img = abrir_imagen(ruta_imagen)
    
+   #Verificación de una imagen válida
+   if img is None:
+      print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
+      return #que devuelvo?
+   
+   opcion_elegida = elegir_opcion()
+   if opcion_elegida == "halftone":
+        
+        pass #chequear si se puede usar el pass
+   
+   elif opcion_elegida == "kmeans":
+        kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
+        pass
 
-   #ejecutar la funcion correspondiente a lo que me mando k-means/halftone
-
-   # funciones transforman la imagen, y devuelven el path a la imagen y luego la grafican
-   # luego la devuelven y que el usuario elija cual prefiere.
-   while :
-
-   #.split() a lo que devuelva pillow
-   # arrays de numpy
-   # .shape() filas y columnas
+   
