@@ -8,6 +8,18 @@ import random
  
 # c
 
+def abrir_imagen(ruta_imagen):
+    try:
+        imagen = Image.open(ruta_imagen)
+        return np.array(imagen)
+        #Usamos la imagen como un array de datos
+    
+    except Exception:
+        return None
+        #devuelve un None para que luego imprima el Error
+    
+
+
 def main():
    #Se solicita al usuario que ingrese la ruta de la imagen
    ruta_imagen = input("Ingrese la ruta de la imagen: ")
@@ -27,4 +39,7 @@ def main():
         kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
         pass
 
-   
+
+#llama a la funcion main
+if __name__ == '__main__':
+    main()
