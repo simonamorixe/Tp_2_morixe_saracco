@@ -1,7 +1,7 @@
 from PIL import Image
 import math
 import numpy as np
-import funciones_morixe
+import funciones
 import random
 
 
