@@ -5,9 +5,9 @@ import funciones
 import random
 
 
- 
-# c
+#-------------------------------- K-MEANS ---------------------------------------------
 
+#Función que abre la imagen - completar docstrings
 def abrir_imagen(ruta_imagen):
     try:
         imagen = Image.open(ruta_imagen)
@@ -17,8 +17,29 @@ def abrir_imagen(ruta_imagen):
     except Exception:
         return None
         #devuelve un None para que luego imprima el Error
-    
 
+
+#Función en la que el usuario selecciona que estilo de imagen quiere 
+def elegir_opcion():
+    #Imprime las opciones posibles
+    print("1. Halftone")
+    print("2. K-means")
+    
+    while True:
+        entrada = input("Seleccione el método de cuantización [1-2]: ")
+
+        if entrada == "1":
+            return "halftone"
+        elif entrada == "2":
+            return "kmeans"
+        else:
+            print("Opción inválida, intente de nuevo.")
+
+
+
+
+
+#--------------------------------------------------------------------------------------
 
 def main():
    #Se solicita al usuario que ingrese la ruta de la imagen

@@ -3,14 +3,7 @@ import math
 import numpy as np
 
 
-#funcion para abrir imagen y verificar que sea png
-def cargar_imagen(ruta):
-    try:
-        imagen = Image.open(ruta)
-        return imagen
-    except:
-        print("No se pudo abrir la imagen.")
-        return None
+
 
  
 def medidas(imagen):
@@ -22,7 +15,7 @@ def medidas(imagen):
     return ancho, alto 
 
 
-#-----------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------
 
 """
 tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
