@@ -4,6 +4,17 @@ import numpy as np
 
 
 
+def cargar_imagen(ruta):
+    """
+    La funcion cargar_imagen abre la imagen dada por el usuario y verifica que se pueda usar, si la imagen es png 
+    retorna la imagen cargada, sino retorna None
+    """
+    try:
+        imagen = Image.open(ruta)
+        return imagen
+    except:
+        print("No se pudo abrir la imagen.")
+        return None
 
  
 def medidas(imagen):
@@ -14,15 +25,11 @@ def medidas(imagen):
     ancho, alto= imagen.size()
     return ancho, alto 
 
-
-#--------------------------------------------------------------------------------------
-
 """
 tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
 el dot_size y el angle_deg te lo da el usuario como input.
 el usuario tambien nos dice que tipo de filtro le quiere poner
 """
-
 
 #FILTRO HALFTONE
 def get_grid_coords(h, w, dot_size, angle_deg):
@@ -52,22 +59,3 @@ def get_grid_coords(h, w, dot_size, angle_deg):
                 positions.append((ix, iy))
     return positions
 
-
-def angulo_puntos():
-     while True:
-         angulos=input("Ingrese los angulos separados por comas:").split(",") 
-         if angulos==[""]:
-            return [15,45,0] #angulos por default
-            
-         lista_angulos=[]
-         for angulo in angulos: #recorro la "listita" que me devuelve el input con el split (borrar comentario dsp)
-            if angulo.isdigit():
-                lista_angulos.append(int(angulo)) 
-
-         if len(lista_angulos)!=3:
-            print("Tiene que ingresar 3 angulos")
-         else:
-            print(lista_angulos)
-            return lista_angulos
-
-angulo_puntos()
