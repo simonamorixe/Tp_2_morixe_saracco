@@ -4,6 +4,35 @@ import numpy as np
 import funciones
 import random
 
+#-------------------------------- GENERAL ---------------------------------------------
+#Función que abre la imagen - completar docstrings
+def abrir_imagen(ruta_imagen):
+    try:
+        imagen = Image.open(ruta_imagen)
+        return np.array(imagen)
+        #Usamos la imagen como un array de datos
+    
+    except FileNotFoundError: 
+        return None
+        #devuelve un None para que luego imprima el Error
+
+
+#Función en la que el usuario selecciona que estilo de imagen quiere 
+def elegir_opcion():
+    #Imprime las opciones posibles
+    print("1. Halftone")
+    print("2. K-means")
+    
+    while True:
+        entrada = input("Seleccione el método de cuantización [1-2]: ")
+
+        if entrada == "1":
+            return "halftone"
+        elif entrada == "2":
+            return "kmeans"
+        else:
+            print("Opción inválida, intente de nuevo.")
+
 #-------------------------------- HALFTONE ---------------------------------------------
 def get_grid_coords(h, w, dot_size, angle_deg):
     positions = []
@@ -60,34 +89,6 @@ def angulo_puntos():
 
             
 #-------------------------------- K-MEANS ---------------------------------------------
-
-#Función que abre la imagen - completar docstrings
-def abrir_imagen(ruta_imagen):
-    try:
-        imagen = Image.open(ruta_imagen)
-        return np.array(imagen)
-        #Usamos la imagen como un array de datos
-    
-    except FileNotFoundError: 
-        return None
-        #devuelve un None para que luego imprima el Error
-
-
-#Función en la que el usuario selecciona que estilo de imagen quiere 
-def elegir_opcion():
-    #Imprime las opciones posibles
-    print("1. Halftone")
-    print("2. K-means")
-    
-    while True:
-        entrada = input("Seleccione el método de cuantización [1-2]: ")
-
-        if entrada == "1":
-            return "halftone"
-        elif entrada == "2":
-            return "kmeans"
-        else:
-            print("Opción inválida, intente de nuevo.")
 
 
 #Función para pedir k 
