@@ -68,7 +68,7 @@ def abrir_imagen(ruta_imagen):
         return np.array(imagen)
         #Usamos la imagen como un array de datos
     
-    except Exception:
+    except FileNotFoundError: 
         return None
         #devuelve un None para que luego imprima el Error
 
@@ -90,7 +90,18 @@ def elegir_opcion():
             print("Opción inválida, intente de nuevo.")
 
 
+#Función para pedir k 
 
+def pedir_k():
+   return
+
+
+
+#Definir función kmeans con lo que devuelven las funciones base
+def kmeans(img):
+    #.shape guarda los valores del filas, columnas y canales
+    alto, ancho, canales = img.shape
+    return
 
 
 #--------------------------------------------------------------------------------------
