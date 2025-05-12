@@ -89,26 +89,58 @@ def angulo_puntos():
 
             
 #-------------------------------- K-MEANS ---------------------------------------------
-
+COLORES_DEFAULT_KMEANS = 8
 
 #Función para pedir k 
-
 def pedir_k():
    while True:
+       #Se solicita al usuario la cantidad de colores deseados.
        k = input("Ingrese el numero de colores deseados: ")
-       
+
+       #Si no se ingresa nada, se utilizan por default 8 colores.
        if k == "":
-           return 
+           return COLORES_DEFAULT_KMEANS
+       
+       if k.isdigit():
+           return int(k)
+       else:
+           print("La cantidad de colores debe ser un numero.")
+
+
+#Función para crear centroides
+def crear_centroides(img, k):
+    #Se vuelve a pedir las medidas de la foto
+    alto, ancho, canales = img.shape
+
+    #Con una lista vacía se crean centroides
+    centroides = []
+
+    for i in range(k):
+        #Se eligen puntos x,y random dentro del tamaño de la imagen
+        x = random.randint(0, ancho-1)
+        y = random.randint(0, alto-1)
+        centroide = img[x:y: ] #Los canales ya estan definidos??????
+
+        #Se agrega cada color como tupla de enteros por si el array tiene valores np.uint8 o diferentes a int
+        centroides.append((int(centroide[0]), int(centroide[1]), int(centroide[2])))
+
+    return centroides
+
        
    
-   return
-
 
 
 #Definir función kmeans con lo que devuelven las funciones base
 def kmeans(img):
     #.shape guarda los valores del filas, columnas y canales
     alto, ancho, canales = img.shape
+
+    k = pedir_k()
+
+    #Con k definido, se deben crear los centroides.
+    centroides = crear_centroides(img, k)
+
+
     return
 
 
