@@ -94,6 +94,13 @@ def angulo_puntos():
 #Función para pedir k 
 
 def pedir_k():
+   while True:
+       k = input("Ingrese el numero de colores deseados: ")
+       
+       if k == "":
+           return 
+       
+   
    return
 
 
@@ -124,7 +131,7 @@ def main():
    
    elif opcion_elegida == "kmeans":
         kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
-        pass
+        
 
 
 #llama a la funcion main
