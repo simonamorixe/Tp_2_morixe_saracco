@@ -126,6 +126,11 @@ def crear_centroides(img, k):
 
     return centroides
 
+#Función para calcular el centroide que le corresponde a cada pixel.
+def calcular_centroide_mas_cercano(pixel, centroides):
+
+    
+
        
 #Función para calcular los grupos de centroides
 def calcular_grupos(img, centroides):
@@ -140,9 +145,12 @@ def calcular_grupos(img, centroides):
         for y in range(alto):
             pixel = img[x:y: ] #Pixel definido por el array de la imagen en las coordenadas(x,y,todo)
 
+            centroide_mas_cercano = calcular_centroide_mas_cercano(pixel, centroides)
+
+
     return grupos
 
-  
+
 
 #Definir función kmeans con lo que devuelven las funciones base
 def kmeans(img):
