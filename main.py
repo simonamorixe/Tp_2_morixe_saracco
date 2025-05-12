@@ -127,7 +127,21 @@ def crear_centroides(img, k):
     return centroides
 
        
-   
+#Función para calcular los grupos de centroides
+def calcular_grupos(img, centroides):
+    alto, ancho, canales = img.shape
+
+    #Diccionario vacío. El resultado debe verse de la siguiente manera:
+    # grupos = {centroide1: [pixel1, pixel2, pixel3, ...], centroide2: [pixel4, pixel5, pixel6, ...]}
+    grupos = {}
+
+    #Se recorre la foto completa
+    for x in range(ancho):
+        for y in range(alto):
+            pixel = img[x:y: ] #Pixel definido por el array de la imagen en las coordenadas(x,y,todo)
+
+    return grupos
+
 
 
 #Definir función kmeans con lo que devuelven las funciones base
@@ -139,6 +153,9 @@ def kmeans(img):
 
     #Con k definido, se deben crear los centroides.
     centroides = crear_centroides(img, k)
+
+    #Con los centroides, se deben juntar los centroides en grupos, creo que son los clusters
+    grupos_centroides = calcular_grupos(img, centroides)
 
 
     return
