@@ -126,10 +126,26 @@ def crear_centroides(img, k):
 
     return centroides
 
+
+
+#Función del calculo de distancia de un color a otro
+def distancia_colores(colorA,colorB):
+    distancia = ( (int(colorA[0]) - int(colorB[0])) ** 2 + (int(colorA[1]) - int(colorB[1])) ** 2 + (int(colorA[2]) - int(colorB[2])) ) ** 0.5
+    return distancia
+
+
 #Función para calcular el centroide que le corresponde a cada pixel.
 def calcular_centroide_mas_cercano(pixel, centroides):
+    centroide_mas_cercano = centroides[0]
 
-    
+    for centroide in centroides:
+        if distancia_colores(pixel, centroide):
+            True
+            #completar
+      
+    return centroide_mas_cercano
+
+
 
        
 #Función para calcular los grupos de centroides
