@@ -142,7 +142,7 @@ def calcular_grupos(img, centroides):
 
     return grupos
 
-
+  
 
 #Definir función kmeans con lo que devuelven las funciones base
 def kmeans(img):
