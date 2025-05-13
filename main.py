@@ -140,10 +140,11 @@ def calcular_centroide_mas_cercano(pixel, centroides):
     centroide_mas_cercano = centroides[0]
 
     for centroide in centroides:
-        if distancia_colores(pixel, centroide):
-            True
-            #completar
-      
+        # Evalua las distancias del pixel seleccionado con cada centroide
+        if distancia_colores(pixel, centroide) < distancia_colores(pixel, centroide_mas_cercano):
+            #Si encuentra un pixel mas cercano al nuevo centroide, se reemplaza como el centroide mas cercano.
+            centroide_mas_cercano = centroide
+            
     return centroide_mas_cercano
 
 
