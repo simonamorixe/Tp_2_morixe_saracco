@@ -179,7 +179,6 @@ def calcular_centroide_mas_cercano(pixel, centroides):
     return centroide_mas_cercano
 
 
-
        
 #Función para calcular los grupos de centroides
 def calcular_grupos(img, centroides):
@@ -187,6 +186,7 @@ def calcular_grupos(img, centroides):
 
     #Diccionario vacío. El resultado debe verse de la siguiente manera:
     # grupos = {centroide1: [pixel1, pixel2, pixel3, ...], centroide2: [pixel4, pixel5, pixel6, ...]}
+    # grupos = {(1,2,3): [pixel1, pixel2, pixel3], ...}
     grupos = {}
 
     #Se recorre la foto completa
@@ -194,8 +194,18 @@ def calcular_grupos(img, centroides):
         for y in range(alto):
             pixel = img[x:y: ] #Pixel definido por el array de la imagen en las coordenadas(x,y,todo)
 
-            centroide_mas_cercano = calcular_centroide_mas_cercano(pixel, centroides)
+            # comentar
+            centroide_mas_cercano = tuple(calcular_centroide_mas_cercano(pixel, centroides))
 
+            #Debo revisar si el centroide ya esta como clave del diccionario
+            #Si el centroide ya esta como clave, agrego el pixel al diccionario
+            if centroide_mas_cercano in grupos:
+                grupos[centroide_mas_cercano].append(pixel)
+            
+            #Sino, creo una clave para el centroide y luego le agrego los pixeles 
+            else:
+                grupos[centroide_mas_cercano] = []
+                grupos[centroide_mas_cercano].append(pixel)
 
     return grupos
 
