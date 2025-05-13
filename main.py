@@ -254,11 +254,15 @@ def promediar_grupos(clusters):
             suma_R += pixel[0] # no se si deberia ser un int
             suma_G += pixel[1]
             suma_B += pixel[2]
+
         total = len(pixeles)
 
+        #Se agrega el centroide mas preciso a la lista de centroides
+        centroide_nuevo = (suma_R//total, suma_G//total, suma_B//total)
+        centroides.append(centroide_nuevo)
 
+    return centroides
 
-    return 
 
 
 #Definir función kmeans con lo que devuelven las funciones base
@@ -271,13 +275,13 @@ def kmeans(img):
     #Con k definido, se deben crear los centroides.
     centroides = crear_centroides(img, k)
 
-    #Con los centroides, se deben juntar los centroides en grupos, creo que son los clusters
-    grupos_centroides = calcular_clusters(img, centroides)
+    #Con los centroides, se deben juntar los centroides en grupos de pixeles, que son los clusters
+    clusters = calcular_clusters(img, centroides)
 
     #Con los grupos de centroides calculados, se deben realizar las iteraciones
 
     for i in range(10): # voy a probarlo con 10 asi no tarda tanto
-        nuevos_centroides = promediar_grupos()
+        nuevos_centroides = promediar_grupos(clusters)
 
 
 
