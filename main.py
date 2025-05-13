@@ -119,7 +119,7 @@ def poner_puntosnegros(matriz_base, positions, lista_radios):
 
             
 #-------------------------------- K-MEANS ---------------------------------------------
-
+COLORES_DEFAULT_KMEANS = 8
 
 #Función para pedir k 
 
@@ -171,10 +171,11 @@ def calcular_centroide_mas_cercano(pixel, centroides):
     centroide_mas_cercano = centroides[0]
 
     for centroide in centroides:
-        if distancia_colores(pixel, centroide):
-            True
-            #completar
-      
+        # Evalua las distancias del pixel seleccionado con cada centroide
+        if distancia_colores(pixel, centroide) < distancia_colores(pixel, centroide_mas_cercano):
+            #Si encuentra un pixel mas cercano al nuevo centroide, se reemplaza como el centroide mas cercano.
+            centroide_mas_cercano = centroide
+            
     return centroide_mas_cercano
 
 
@@ -204,7 +205,15 @@ def calcular_grupos(img, centroides):
 def kmeans(img):
     #.shape guarda los valores del filas, columnas y canales
     alto, ancho, canales = img.shape
-    return
+
+    k = pedir_k()
+
+    #Con k definido, se deben crear los centroides.
+    centroides = crear_centroides(img, k)
+
+    #Con los centroides, se deben juntar los centroides en grupos, creo que son los clusters
+    grupos_centroides = calcular_grupos(img, centroides)
+
 
 
 #--------------------------------------------------------------------------------------
