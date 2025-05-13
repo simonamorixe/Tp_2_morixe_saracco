@@ -34,6 +34,32 @@ def elegir_opcion():
             print("Opción inválida, intente de nuevo.")
 
 #-------------------------------- HALFTONE ---------------------------------------------
+def tamaño_puntos():
+    while True:
+        tamaño=input("Ingrese el tamaño del punto:")
+        if tamaño=="":
+            return 5 #tamaño por default
+        elif tamaño.isdigit():
+            return int(tamaño) #lo paso de str a int
+        else:
+            print("Ingrese un numero entero")
+
+def angulo_puntos():
+     while True:
+         angulos=input("Ingrese los angulos separados por comas:").split(",") 
+         if angulos==[""]:
+            return [15,45,0] #angulos por default
+        
+         lista_angulos=[]
+         for angulo in angulos: #recorro la "listita" que me devuelve el input con el split (borrar comentario dsp)
+            if angulo.isdigit():
+                lista_angulos.append(int(angulo)) 
+
+         if len(lista_angulos)!=3:
+            print("Tiene que ingresar 3 angulos")
+         else:
+            return lista_angulos
+         
 def get_grid_coords(h, w, dot_size, angle_deg):
     positions = []
     angle_rad = math.radians(angle_deg)
@@ -61,37 +87,42 @@ def get_grid_coords(h, w, dot_size, angle_deg):
                 positions.append((ix, iy))
     return positions
 
-def tamaño_puntos():
-    while True:
-        tamaño=input("Ingrese el tamaño del punto:")
-        if tamaño=="":
-            return 5 #tamaño por default
-        elif tamaño.isdigit():
-            return int(tamaño) #lo paso de str a int
-        else:
-            print("Ingrese un numero entero")
 
-def angulo_puntos():
-     while True:
-         angulos=input("Ingrese los angulos separados por comas:").split(",") 
-         if angulos==[""]:
-            return [15,45,0] #angulos por default
+def calculo_radios(canales,positions,tamaño):
+   lista_radios = []
+   for coordenada in positions: #recorre la lista de tuplas
+        x = coordenada[0] #asigno la variable a partir de la posicon 0 de la tupla
+        y = coordenada[1] #idem x
+        intensidad = canales[y, x] #busco la intensidad a partir de la posicion en la matriz con los canales
+        radio = (1 - intensidad / 255) * tamaño * 0.7 #calculo de radio dado por el enunciado
+        lista_radios.append(radio) 
+
+   return lista_radios
+
+def poner_puntosnegros(matriz_base, positions, lista_radios):
+    alto,ancho = matriz_base.shape 
+    for coordenada,radio in zip(positions, lista_radios): #recorro posiciones y radios a la vez
+        x = coordenada[0]
+        y = coordenada[1]
+        radio_int = math.ceil(radio) #funcion de math que redondea hacia arriba
         
-         lista_angulos=[]
-         for angulo in angulos: #recorro la "listita" que me devuelve el input con el split (borrar comentario dsp)
-            if angulo.isdigit():
-                lista_angulos.append(int(angulo)) 
+        for coord_x in range(x - radio_int - 1, x + radio_int + 1): 
+            for coord_y in range(y - radio_int - 1, y + radio_int + 1):
+                if 0 <= coord_x < ancho and 0 <= coord_y < alto:
+                    if ((coord_x - x) ** 2) + ((coord_y - y) ** 2) <= radio ** 2:
+                        matriz_base[coord_y, coord_x] = 0
 
-         if len(lista_angulos)!=3:
-            print("Tiene que ingresar 3 angulos")
-         else:
-            return lista_angulos
+    return matriz_base
+    
+
+
 
             
 #-------------------------------- K-MEANS ---------------------------------------------
-COLORES_DEFAULT_KMEANS = 8
+
 
 #Función para pedir k 
+
 def pedir_k():
    while True:
        #Se solicita al usuario la cantidad de colores deseados.
@@ -140,11 +171,10 @@ def calcular_centroide_mas_cercano(pixel, centroides):
     centroide_mas_cercano = centroides[0]
 
     for centroide in centroides:
-        # Evalua las distancias del pixel seleccionado con cada centroide
-        if distancia_colores(pixel, centroide) < distancia_colores(pixel, centroide_mas_cercano):
-            #Si encuentra un pixel mas cercano al nuevo centroide, se reemplaza como el centroide mas cercano.
-            centroide_mas_cercano = centroide
-            
+        if distancia_colores(pixel, centroide):
+            True
+            #completar
+      
     return centroide_mas_cercano
 
 
@@ -174,16 +204,6 @@ def calcular_grupos(img, centroides):
 def kmeans(img):
     #.shape guarda los valores del filas, columnas y canales
     alto, ancho, canales = img.shape
-
-    k = pedir_k()
-
-    #Con k definido, se deben crear los centroides.
-    centroides = crear_centroides(img, k)
-
-    #Con los centroides, se deben juntar los centroides en grupos, creo que son los clusters
-    grupos_centroides = calcular_grupos(img, centroides)
-
-
     return
 
 
@@ -206,7 +226,7 @@ def main():
    
    elif opcion_elegida == "kmeans":
         kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
-        
+        pass
 
 
 #llama a la funcion main
