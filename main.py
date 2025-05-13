@@ -114,6 +114,30 @@ def poner_puntosnegros(matriz_base, positions, lista_radios):
 
     return matriz_base
     
+def halftone(img):
+    """
+    Por cada canal, 
+        Hacer la matriz blanca
+        Hacer los puntos negros
+        Guardar la imagen en el canal correcto
+    """
+    #llamo funciones para luego usar las variables como argumento de las demas funciones
+    alto,ancho,canales = img.shape
+    tamaño_punto = tamaño_puntos()
+    angulos = angulo_puntos() 
+    nueva_imagen = np.zeros(img.shape) # Crea una matriz vacía (con ceros) del mismo tamaño que la original
+    
+    #recorre tres veces para cada canal rojo, verde y azul
+    for i in range(3):
+        angulo_canal = angulos[i] 
+        coordenadas_puntos = get_grid_coords(alto, ancho, tamaño_punto, angulo_canal)
+        tamaños_puntos = calculo_radios(img[:,:,i], coordenadas_puntos, tamaño_punto) #img[:,:,i] sigue el formato de alto,ancho,canales
+        matriz_base = np.full((alto, ancho), 255) #crea matriz blanca (intensidad:255) del mismo tamaño que la imagen
+        matriz_punteada = poner_puntosnegros(matriz_base, coordenadas_puntos, tamaños_puntos)
+        nueva_imagen[:, : ,i] = matriz_punteada # imagen_resultante[todo el alto, todo el ancho, el canal especifico]
+
+    imagen_final = Image.fromarray(nueva_imagen.astype(np.uint8)) #comvierte matriz Numpy a imagen real para poder ver la imagen final con los puntos
+    imagen_final.save("resultado.png")
 
 
 
