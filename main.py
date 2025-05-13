@@ -130,8 +130,12 @@ def halftone(img):
     #recorre tres veces para cada canal rojo, verde y azul
     for i in range(3):
         angulo_canal = angulos[i] 
+
         coordenadas_puntos = get_grid_coords(alto, ancho, tamaño_punto, angulo_canal)
-        tamaños_puntos = calculo_radios(img[:,:,i], coordenadas_puntos, tamaño_punto) #img[:,:,i] sigue el formato de alto,ancho,canales
+
+        #img[:,:,i] sigue el formato de alto,ancho,canales
+        tamaños_puntos = calculo_radios(img[:,:,i], coordenadas_puntos, tamaño_punto) 
+
         matriz_base = np.full((alto, ancho), 255) #crea matriz blanca (intensidad:255) del mismo tamaño que la imagen
         matriz_punteada = poner_puntosnegros(matriz_base, coordenadas_puntos, tamaños_puntos)
         nueva_imagen[:, : ,i] = matriz_punteada # imagen_resultante[todo el alto, todo el ancho, el canal especifico]
@@ -205,34 +209,56 @@ def calcular_centroide_mas_cercano(pixel, centroides):
 
        
 #Función para calcular los grupos de centroides
-def calcular_grupos(img, centroides):
+def calcular_clusters(img, centroides):
     alto, ancho, canales = img.shape
 
     #Diccionario vacío. El resultado debe verse de la siguiente manera:
-    # grupos = {centroide1: [pixel1, pixel2, pixel3, ...], centroide2: [pixel4, pixel5, pixel6, ...]}
-    # grupos = {(1,2,3): [pixel1, pixel2, pixel3], ...}
-    grupos = {}
+    # clusters = {centroide1: [pixel1, pixel2, pixel3, ...], centroide2: [pixel4, pixel5, pixel6, ...]}
+    # clusters = {(1,2,3): [pixel1, pixel2, pixel3], ...}
+
+    clusters = {}
 
     #Se recorre la foto completa
     for x in range(ancho):
         for y in range(alto):
-            pixel = img[x:y: ] #Pixel definido por el array de la imagen en las coordenadas(x,y,todo)
+            pixel = img[y, x, : ] #Pixel definido por el array de la imagen en las coordenadas(alto,ancho,canales)
 
             # comentar
             centroide_mas_cercano = tuple(calcular_centroide_mas_cercano(pixel, centroides))
 
             #Debo revisar si el centroide ya esta como clave del diccionario
             #Si el centroide ya esta como clave, agrego el pixel al diccionario
-            if centroide_mas_cercano in grupos:
-                grupos[centroide_mas_cercano].append(pixel)
+            if centroide_mas_cercano in clusters:
+                clusters[centroide_mas_cercano].append(pixel)
             
             #Sino, creo una clave para el centroide y luego le agrego los pixeles 
             else:
-                grupos[centroide_mas_cercano] = []
-                grupos[centroide_mas_cercano].append(pixel)
+                clusters[centroide_mas_cercano] = []
+                clusters[centroide_mas_cercano].append(pixel)
 
-    return grupos
+    return clusters
 
+
+#Función para promediar los grupos de pixeles para cada centroide (clusters) y buscar los centroides finales
+def promediar_grupos(clusters):
+    centroides = []
+
+    #Recorro el diccionario de clusters
+    for centroide_viejo, pixeles in clusters.items():
+        suma_R = 0
+        suma_G = 0
+        suma_B = 0
+
+        #Por cada pixel correspondiente al centroide, se suman las coordenadas para sacar un promedio 
+        for pixel in pixeles:
+            suma_R += pixel[0] # no se si deberia ser un int
+            suma_G += pixel[1]
+            suma_B += pixel[2]
+        total = len(pixeles)
+
+
+
+    return 
 
 
 #Definir función kmeans con lo que devuelven las funciones base
@@ -246,7 +272,12 @@ def kmeans(img):
     centroides = crear_centroides(img, k)
 
     #Con los centroides, se deben juntar los centroides en grupos, creo que son los clusters
-    grupos_centroides = calcular_grupos(img, centroides)
+    grupos_centroides = calcular_clusters(img, centroides)
+
+    #Con los grupos de centroides calculados, se deben realizar las iteraciones
+
+    for i in range(10): # voy a probarlo con 10 asi no tarda tanto
+        nuevos_centroides = promediar_grupos()
 
 
 
