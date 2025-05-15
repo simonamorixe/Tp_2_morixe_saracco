@@ -251,9 +251,9 @@ def promediar_grupos(clusters):
 
         #Por cada pixel correspondiente al centroide, se suman las coordenadas para sacar un promedio 
         for pixel in pixeles:
-            suma_R += pixel[0] # no se si deberia ser un int
-            suma_G += pixel[1]
-            suma_B += pixel[2]
+            suma_R += int(pixel[0]) 
+            suma_G += int(pixel[1])
+            suma_B += int(pixel[2])
 
         total = len(pixeles)
 
@@ -265,8 +265,19 @@ def promediar_grupos(clusters):
 
 
 #Funcion para pintar la imagen negra por grupos de colores
-def pintar_por_grupos():
-    return
+def pintar_por_grupos(imagen_vieja, nueva_imagen, clusters):
+    alto, ancho, canales = imagen_vieja.shape
+
+    for x in range(ancho):
+        for y in range(alto):
+            #Se toma cada pixel y se lo compara con todos los centroides
+            pixel = imagen_vieja[y,x, : ]
+            color_representativo = calcular_centroide_mas_cercano(pixel, list(clusters.keys()))
+
+            #Se colorea el pixel con el color correspondiente de su centroide
+            nueva_imagen[y, x, : ] = color_representativo
+
+    return nueva_imagen
 
 
 
