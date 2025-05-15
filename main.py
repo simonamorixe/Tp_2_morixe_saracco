@@ -44,7 +44,7 @@ def tamaño_puntos():
         else:
             print("Ingrese un numero entero")
 
-def angulo_puntos():
+def angulo_puntos(): # ver esta funcion porque se esta ejecutando antes que el codigo principal
      while True:
          angulos=input("Ingrese los angulos separados por comas:").split(",") 
          if angulos==[""]:
@@ -264,6 +264,11 @@ def promediar_grupos(clusters):
     return centroides
 
 
+#Funcion para pintar la imagen negra por grupos de colores
+def pintar_por_grupos():
+    return
+
+
 
 #Definir función kmeans con lo que devuelven las funciones base
 def kmeans(img):
@@ -283,30 +288,37 @@ def kmeans(img):
     for i in range(10): # voy a probarlo con 10 asi no tarda tanto
         nuevos_centroides = promediar_grupos(clusters)
 
+        #Si los centroides no se mueven, cortar el ciclo.
+        if centroides == nuevos_centroides:
+            break
+
+        clusters = calcular_clusters(img, centroides)
+
+    #Se crea una imagen negra, con todos los pixeles en 0, del mismo tamaño que la original
+    nueva_imagen = np.zeros((alto, ancho, canales))
+
+    imagen_final = pintar_por_grupos()
+        
+
 
 
 #--------------------------------------------------------------------------------------
 
-def main():
-   #Se solicita al usuario que ingrese la ruta de la imagen
-   ruta_imagen = input("Ingrese la ruta de la imagen: ")
-   img = abrir_imagen(ruta_imagen)
-   
-   #Verificación de una imagen válida
-   if img is None:
-      print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
-      return #que devuelvo?
-   
-   opcion_elegida = elegir_opcion()
-   if opcion_elegida == "halftone":
-        
-        pass #chequear si se puede usar el pass
-   
-   elif opcion_elegida == "kmeans":
-        kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
-        pass
 
+#Se solicita al usuario que ingrese la ruta de la imagen
+ruta_imagen = input("Ingrese la ruta de la imagen: ")
+img = abrir_imagen(ruta_imagen)
 
-#llama a la funcion main
-if __name__ == '__main__':
-    main()
+#Verificación de una imagen válida
+if img is None:
+    print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
+   
+
+opcion_elegida = elegir_opcion()
+if opcion_elegida == "halftone":
+    halftone(img)
+
+elif opcion_elegida == "kmeans":
+    kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
+    
+
