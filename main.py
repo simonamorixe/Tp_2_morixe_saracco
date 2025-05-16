@@ -2,7 +2,7 @@ from PIL import Image
 import math
 import numpy as np
 from funciones_kmeans import kmeans
-from funciones_halftone import halftone
+
 import random
 
 #-------------------------------- GENERAL ---------------------------------------------
@@ -160,16 +160,27 @@ def halftone(img):
 ruta_imagen = input("Ingrese la ruta de la imagen: ")
 imagen = abrir_imagen(ruta_imagen)
 
-#Verificación de una imagen válida
-if imagen is None:
-    imagen = input("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
-   
+while imagen is None:
+    print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
+    ruta_imagen = input("Ingrese la ruta de la imagen: ")
+    imagen = abrir_imagen(ruta_imagen)
+
+
 
 opcion_elegida = elegir_opcion()
+
 if opcion_elegida == "halftone":
     halftone(imagen)
 
 elif opcion_elegida == "kmeans":
-    kmeans(imagen) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
+    kmeans(imagen) 
+
+    
+
+
+
+   
+
+
     
 
