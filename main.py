@@ -10,7 +10,8 @@ from funciones_halftone import halftone
 def abrir_imagen(ruta_imagen):
     """
     La funcion abrir_imagen abre una imagen y la convierte en un array de NumPy 
-    si se puede abrir, devuelve el array
+    Si se puede abrir, retorna la imagen en array.
+    Si no se puede abrir, retorna none
     """
     try:
         imagen = Image.open(ruta_imagen).convert("RGB")

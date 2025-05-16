@@ -92,7 +92,6 @@ def poner_puntosnegros(matriz_base, positions, lista_radios):
     La funcion dibuja círculos negros sobre una matriz base, usando como centros las coordenadas dadas 
     en 'positions' y como tamaño los radios en 'lista_radios'. 
     Cada valor que "cae dentro" del área circular se reemplaza por 0.
-    
     Devuelve la matriz modificada con los puntos negros.
     """
     alto,ancho = matriz_base.shape 
@@ -115,9 +114,9 @@ def poner_puntosnegros(matriz_base, positions, lista_radios):
     
 def halftone(img):
     """
-    Por cada canal, crea la matriz blanca
-        Hace los puntos negros
-        Guardar la imagen en el canal correcto
+    Genera una imagen con efecto halftone a partir de una imagen a color.
+    Utiliza funciones previamente definidas para calcular posiciones, radios 
+    y aplicar puntos negros en cada canal. Guarda el resultado como 'resultado.png'
     """
     #llamo funciones para luego usar las variables como argumento de las demas funciones
     alto,ancho,canales = img.shape
