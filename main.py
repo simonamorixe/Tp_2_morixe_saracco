@@ -11,7 +11,8 @@ import random
 def abrir_imagen(ruta_imagen):
     """
     La funcion abrir_imagen abre una imagen y la convierte en un array de NumPy 
-    si se puede abrir, devuelve 
+    Si se puede abrir, retorna la imagen en array.
+    Si no se puede abrir, retorna none
     """
     try:
         imagen = Image.open(ruta_imagen).convert("RGB")
@@ -21,9 +22,6 @@ def abrir_imagen(ruta_imagen):
     except FileNotFoundError: 
         return None
         #devuelve un None para que luego imprima el Error
-
-
-
 
 
 #--------------------------------------------------------------------------------------

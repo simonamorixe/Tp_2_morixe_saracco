@@ -2,7 +2,12 @@ from PIL import Image
 import math
 import numpy as np
 
-def tamaño_puntos():
+def tamaño_puntos(): 
+    """
+    Funcion que pide al usuario insertar el tamaño de los puntos para crear la nueva imagen.
+    Si el usuario no inserte ningun valor, se usara un valor predeterminado. 
+    Si el usuario inserta un valor valido, devuelve ese valor.
+    """
     while True:
         tamaño=input("Ingrese el tamaño del punto:")
         if tamaño=="":
@@ -12,8 +17,13 @@ def tamaño_puntos():
         else:
             print("Ingrese un numero entero")
 
-def angulo_puntos(): # ver esta funcion porque se esta ejecutando antes que el codigo principal, esta puesta 2 veces en las funcioones
-     while True:
+def angulo_puntos(): 
+    """
+    Funcion que pide al usuario insertar los angulos de los puntos para cada canal (RGB) para crear la nueva imagen.
+    Si el usuario no inserte ningun valor, se usaran un valores predeterminados. 
+    Si el usuario inserta un valor valido, devuelve ese valor.
+    """
+    while True:
          angulos=input("Ingrese los angulos separados por comas:").split(",") 
          if angulos==[""]:
             #angulos por default
@@ -61,8 +71,14 @@ def get_grid_coords(h, w, dot_size, angle_deg):
 
 
 def calculo_radios(canales,positions,tamaño):
+   """
+    Calcula el radio de puntos en función de la intensidad de píxeles en una imagen.
+    Para cada coordenada dada, se obtiene el valor de intensidad del canal correspondiente
+    y se calcula un radio proporcional inverso a dicha intensidad (a menor intensidad, mayor radio).
+    Devuelve una lista con el tamaño de los radios calculados.
+   """
    lista_radios = []
-   for coordenada in positions: #recorre la lista de tuplas
+   for coordenada in positions: #recorre la lista de tuplas de las coordenadas
         x = coordenada[0] #asigno la variable a partir de la posicon 0 de la tupla
         y = coordenada[1] #idem x
         intensidad = canales[y, x] #busco la intensidad a partir de la posicion en la matriz con los canales
@@ -72,6 +88,13 @@ def calculo_radios(canales,positions,tamaño):
    return lista_radios
 
 def poner_puntosnegros(matriz_base, positions, lista_radios):
+    """
+    La funcion dibuja círculos negros sobre una matriz base, usando como centros las coordenadas dadas 
+    en 'positions' y como tamaño los radios en 'lista_radios'. 
+    Cada valor que "cae dentro" del área circular se reemplaza por 0.
+    
+    Devuelve la matriz modificada con los puntos negros.
+    """
     alto,ancho = matriz_base.shape 
 
     #recorro posiciones y radios a la vez
@@ -92,9 +115,8 @@ def poner_puntosnegros(matriz_base, positions, lista_radios):
     
 def halftone(img):
     """
-    Por cada canal, 
-        Hacer la matriz blanca
-        Hacer los puntos negros
+    Por cada canal, crea la matriz blanca
+        Hace los puntos negros
         Guardar la imagen en el canal correcto
     """
     #llamo funciones para luego usar las variables como argumento de las demas funciones
