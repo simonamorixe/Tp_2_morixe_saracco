@@ -7,13 +7,15 @@ import random
 COLORES_DEFAULT_KMEANS = 8
 
 #Función para pedir k 
-
 def pedir_k():
+   """
+   La función solicita al usuario la cantidad de colores deseados.
+   Si no se ingresa nada, se utilizan por default 8 colores.
+   La función devuelve el numero a utilizar.
+   """
    while True:
-       #Se solicita al usuario la cantidad de colores deseados.
        k = input("Ingrese el numero de colores deseados: ")
 
-       #Si no se ingresa nada, se utilizan por default 8 colores.
        if k == "":
            return COLORES_DEFAULT_KMEANS
        
@@ -25,7 +27,11 @@ def pedir_k():
 
 #Función para crear centroides
 def crear_centroides(img, k):
-    #Se vuelve a pedir las medidas de la foto
+    """
+    La función recibe el array de la imagen y el numero de colores a utilizar.
+    Se piden las medidas de la foto y se eligen centroides aleatorios.
+    La función devuelve una lista de k centroides.
+    """
     alto, ancho, canales = img.shape
 
     #Con una lista vacía se crean centroides
@@ -46,6 +52,9 @@ def crear_centroides(img, k):
 
 #Función del calculo de distancia de un color a otro
 def distancia_colores(colorA, colorB):
+    """
+    La función recibe 2 colores, calcula la distancia entre ambos y devuelve el resultado.
+    """
     distancia = (
         (int(colorA[0]) - int(colorB[0])) ** 2 + 
         (int(colorA[1]) - int(colorB[1])) ** 2 + 
@@ -56,6 +65,7 @@ def distancia_colores(colorA, colorB):
 
 #Función para calcular el centroide que le corresponde a cada pixel.
 def calcular_centroide_mas_cercano(pixel, centroides):
+    
     centroide_mas_cercano = centroides[0]
 
     for centroide in centroides:
