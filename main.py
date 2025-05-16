@@ -44,7 +44,7 @@ def tamaño_puntos():
         else:
             print("Ingrese un numero entero")
 
-def angulo_puntos(): # ver esta funcion porque se esta ejecutando antes que el codigo principal
+def angulo_puntos(): # ver esta funcion porque se esta ejecutando antes que el codigo principal, esta puesta 2 veces en las funcioones
      while True:
          angulos=input("Ingrese los angulos separados por comas:").split(",") 
          if angulos==[""]:
@@ -74,7 +74,7 @@ def get_grid_coords(h, w, dot_size, angle_deg):
     offset_x = cx - (num_x * dot_size) / 2
     offset_y = cy - (num_y * dot_size) / 2
 
-    # recorrer la grilla y calcular las posiciones (geometría 👻) 
+    # recorrer la grilla y calcular las posiciones 
     for i in range(num_y):
         for j in range(num_x):
             gx = offset_x + j * dot_size + dot_size / 2 - cx
@@ -178,19 +178,22 @@ def crear_centroides(img, k):
         #Se eligen puntos x,y random dentro del tamaño de la imagen
         x = random.randint(0, ancho-1)
         y = random.randint(0, alto-1)
-        centroide = img[x:y: ] #Los canales ya estan definidos??????
+        centroide = img[y, x, :] 
 
-        #Se agrega cada color como tupla de enteros por si el array tiene valores np.uint8 o diferentes a int
+        #Se agrega cada color como tupla de enteros por si el array tiene valores diferentes a int
         centroides.append((int(centroide[0]), int(centroide[1]), int(centroide[2])))
 
     return centroides
 
 
 
-#Ambas funciones distancia_colores y calcular_centroides_mas_cercanos
 #Función del calculo de distancia de un color a otro
 def distancia_colores(colorA, colorB):
-    distancia = ( (int(colorA[0]) - int(colorB[0])) ** 2 + (int(colorA[1]) - int(colorB[1])) ** 2 + (int(colorA[2]) - int(colorB[2])) ) ** 0.5
+    distancia = (
+        (int(colorA[0]) - int(colorB[0])) ** 2 + 
+        (int(colorA[1]) - int(colorB[1])) ** 2 + 
+        (int(colorA[2]) - int(colorB[2])) ** 2
+        ) ** 0.5
     return distancia
 
 
@@ -221,9 +224,7 @@ def calcular_clusters(img, centroides):
     #Se recorre la foto completa
     for x in range(ancho):
         for y in range(alto):
-            pixel = img[y, x, : ] #Pixel definido por el array de la imagen en las coordenadas(alto,ancho,canales)
-
-            # comentar
+            pixel = img[y,x, : ] 
             centroide_mas_cercano = tuple(calcular_centroide_mas_cercano(pixel, centroides))
 
             #Debo revisar si el centroide ya esta como clave del diccionario
@@ -308,7 +309,10 @@ def kmeans(img):
     #Se crea una imagen negra, con todos los pixeles en 0, del mismo tamaño que la original
     nueva_imagen = np.zeros((alto, ancho, canales))
 
-    imagen_final = pintar_por_grupos()
+    imagen_final = Image.fromarray(pintar_por_grupos(img, nueva_imagen, clusters).astype(np.uint8))
+    imagen_final.save("resultado.png")
+
+    
         
 
 
@@ -318,18 +322,18 @@ def kmeans(img):
 
 #Se solicita al usuario que ingrese la ruta de la imagen
 ruta_imagen = input("Ingrese la ruta de la imagen: ")
-img = abrir_imagen(ruta_imagen)
+imagen = abrir_imagen(ruta_imagen)
 
 #Verificación de una imagen válida
-if img is None:
-    print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
+if imagen is None:
+    imagen = input("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
    
 
 opcion_elegida = elegir_opcion()
 if opcion_elegida == "halftone":
-    halftone(img)
+    halftone(imagen)
 
 elif opcion_elegida == "kmeans":
-    kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
+    kmeans(imagen) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
     
 
