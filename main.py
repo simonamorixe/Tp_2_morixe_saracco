@@ -2,6 +2,7 @@ from PIL import Image
 import math
 import numpy as np
 from funciones_kmeans import kmeans
+from funciones_halftone import halftone
 
 import random
 
@@ -13,7 +14,7 @@ def abrir_imagen(ruta_imagen):
     si se puede abrir, devuelve 
     """
     try:
-        imagen = Image.open(ruta_imagen)
+        imagen = Image.open(ruta_imagen).convert("RGB")
         return np.array(imagen)
         #Usamos la imagen como un array de datos
     
@@ -22,21 +23,7 @@ def abrir_imagen(ruta_imagen):
         #devuelve un None para que luego imprima el Error
 
 
-#Función en la que el usuario selecciona que estilo de imagen quiere 
-def elegir_opcion():
-    #Imprime las opciones posibles
-    print("1. Halftone")
-    print("2. K-means")
-    
-    while True:
-        entrada = input("Seleccione el método de cuantización [1-2]: ")
 
-        if entrada == "1":
-            return "halftone"
-        elif entrada == "2":
-            return "kmeans"
-        else:
-            print("Opción inválida, intente de nuevo.")
 
 
 #--------------------------------------------------------------------------------------
@@ -52,15 +39,25 @@ while imagen is None:
     imagen = abrir_imagen(ruta_imagen)
 
 
+#Imprime las opciones posibles
+print("1. Halftone")
+print("2. K-means")
+    
+entrada = input("Seleccione el método de cuantización [1-2]: ")
 
-opcion_elegida = elegir_opcion()
-
-if opcion_elegida == "halftone":
+while entrada !="1" and entrada !="2":
+    print("Opción inválida, intente de nuevo.")
+    entrada = input("Seleccione el método de cuantización [1-2]: ")
+    
+if entrada == "1":
+    opcion_elegida = "halftone"
     halftone(imagen)
+    
+elif entrada == "2":
+    opcion_elegida = "kmeans"
+    kmeans(imagen)
 
-elif opcion_elegida == "kmeans":
-    kmeans(imagen) 
-
+    
     
 
 
