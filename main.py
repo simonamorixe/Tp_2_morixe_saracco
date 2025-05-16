@@ -298,6 +298,7 @@ def kmeans(img):
     #Con los grupos de centroides calculados, se deben realizar las iteraciones
 
     for i in range(10): # voy a probarlo con 10 asi no tarda tanto
+        print(f"{i + 1}%")
         nuevos_centroides = promediar_grupos(clusters)
 
         #Si los centroides no se mueven, cortar el ciclo.
