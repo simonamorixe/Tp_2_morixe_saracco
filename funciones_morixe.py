@@ -4,32 +4,6 @@ import numpy as np
 
 
 
-def cargar_imagen(ruta):
-    """
-    La funcion cargar_imagen abre la imagen dada por el usuario y verifica que se pueda usar, si la imagen es png 
-    retorna la imagen cargada, sino retorna None
-    """
-    try:
-        imagen = Image.open(ruta)
-        return imagen
-    except:
-        print("No se pudo abrir la imagen.")
-        return None
-
- 
-def medidas(imagen):
-    """
-    La funcion medidias busca el ancho y el alto de la imagen a partir de una funcion de la libreria pillow
-    Retorna estos parametros para luego usarlos en otras funciones
-    """
-    ancho, alto= imagen.size()
-    return ancho, alto 
-
-"""
-tenemos que crear funcion que analice la imagen y saque el ancho y alto para meterlo despues en la funcion de halftone
-el dot_size y el angle_deg te lo da el usuario como input.
-el usuario tambien nos dice que tipo de filtro le quiere poner
-"""
 
 #FILTRO HALFTONE
 def get_grid_coords(h, w, dot_size, angle_deg):

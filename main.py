@@ -7,6 +7,10 @@ import random
 #-------------------------------- GENERAL ---------------------------------------------
 #Función que abre la imagen - completar docstrings
 def abrir_imagen(ruta_imagen):
+    """
+    La funcion abrir_imagen abre una imagen y la convierte en un array de NumPy 
+    si se puede abrir, devuelve 
+    """
     try:
         imagen = Image.open(ruta_imagen)
         return np.array(imagen)
@@ -48,11 +52,15 @@ def angulo_puntos():
      while True:
          angulos=input("Ingrese los angulos separados por comas:").split(",") 
          if angulos==[""]:
-            return [15,45,0] #angulos por default
+            #angulos por default
+            return [15,45,0] 
         
          lista_angulos=[]
-         for angulo in angulos: #recorro la "listita" que me devuelve el input con el split (borrar comentario dsp)
+
+         #recorre lista que me devuelve el input con el split 
+         for angulo in angulos: 
             if angulo.isdigit():
+                #paso str a int para que quede como un valor numerico y despues poder utilizarlo
                 lista_angulos.append(int(angulo)) 
 
          if len(lista_angulos)!=3:
@@ -101,10 +109,14 @@ def calculo_radios(canales,positions,tamaño):
 
 def poner_puntosnegros(matriz_base, positions, lista_radios):
     alto,ancho = matriz_base.shape 
-    for coordenada,radio in zip(positions, lista_radios): #recorro posiciones y radios a la vez
+
+    #recorro posiciones y radios a la vez
+    for coordenada,radio in zip(positions, lista_radios): 
         x = coordenada[0]
         y = coordenada[1]
-        radio_int = math.ceil(radio) #funcion de math que redondea hacia arriba
+
+        #funcion de math que redondea hacia arriba
+        radio_int = math.ceil(radio) 
         
         for coord_x in range(x - radio_int - 1, x + radio_int + 1): 
             for coord_y in range(y - radio_int - 1, y + radio_int + 1):
@@ -125,18 +137,31 @@ def halftone(img):
     alto,ancho,canales = img.shape
     tamaño_punto = tamaño_puntos()
     angulos = angulo_puntos() 
-    nueva_imagen = np.zeros(img.shape) # Crea una matriz vacía (con ceros) del mismo tamaño que la original
+
+   #Crea una matriz vacía (con ceros) del mismo tamaño que la original
+    nueva_imagen = np.zeros(img.shape)
     
     #recorre tres veces para cada canal rojo, verde y azul
     for i in range(3):
-        angulo_canal = angulos[i] 
-        coordenadas_puntos = get_grid_coords(alto, ancho, tamaño_punto, angulo_canal)
-        tamaños_puntos = calculo_radios(img[:,:,i], coordenadas_puntos, tamaño_punto) #img[:,:,i] sigue el formato de alto,ancho,canales
-        matriz_base = np.full((alto, ancho), 255) #crea matriz blanca (intensidad:255) del mismo tamaño que la imagen
-        matriz_punteada = poner_puntosnegros(matriz_base, coordenadas_puntos, tamaños_puntos)
-        nueva_imagen[:, : ,i] = matriz_punteada # imagen_resultante[todo el alto, todo el ancho, el canal especifico]
 
-    imagen_final = Image.fromarray(nueva_imagen.astype(np.uint8)) #comvierte matriz Numpy a imagen real para poder ver la imagen final con los puntos
+      #toma el angulo en determinada posicion para el canal i 
+      angulo_canal = angulos[i] 
+
+      coordenadas_puntos = get_grid_coords(alto, ancho, tamaño_punto, angulo_canal)
+
+      #img[:,:,i] sigue el formato de alto,ancho,canales
+      tamaños_puntos = calculo_radios(img[:,:,i], coordenadas_puntos, tamaño_punto) 
+
+      #crea matriz blanca (intensidad:255) del mismo tamaño que la imagen
+      matriz_base = np.full((alto, ancho), 255) 
+
+      matriz_punteada = poner_puntosnegros(matriz_base, coordenadas_puntos, tamaños_puntos)
+
+      #inserta matriz_punteada en el canal i de la imagen final [todo el alto, todo el ancho, el canal especifico]
+      nueva_imagen[:, : ,i] = matriz_punteada 
+
+   #convierte matriz Numpy a imagen real para poder ver la imagen final con los puntos
+    imagen_final = Image.fromarray(nueva_imagen.astype(np.uint8)) 
     imagen_final.save("resultado.png")
 
 
