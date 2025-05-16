@@ -1,12 +1,11 @@
 from PIL import Image
-import math
 import numpy as np
 from funciones_kmeans import kmeans
 from funciones_halftone import halftone
 
 import random
 
-#-------------------------------- GENERAL ---------------------------------------------
+#---------------------------FUNCIONES GENERALES ------------------------------------
 #Función que abre la imagen - completar docstrings
 def abrir_imagen(ruta_imagen):
     """
@@ -23,10 +22,7 @@ def abrir_imagen(ruta_imagen):
         #devuelve un None para que luego imprima el Error
 
 
-
-
-
-#--------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
 
 
 #Se solicita al usuario que ingrese la ruta de la imagen
