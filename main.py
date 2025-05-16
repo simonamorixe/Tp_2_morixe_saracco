@@ -1,7 +1,8 @@
 from PIL import Image
 import math
 import numpy as np
-import funciones
+from funciones_kmeans import kmeans
+
 import random
 
 #-------------------------------- GENERAL ---------------------------------------------
@@ -37,6 +38,9 @@ def elegir_opcion():
         else:
             print("Opción inválida, intente de nuevo.")
 
+
+
+
 #-------------------------------- HALFTONE ---------------------------------------------
 def tamaño_puntos():
     while True:
@@ -48,7 +52,7 @@ def tamaño_puntos():
         else:
             print("Ingrese un numero entero")
 
-def angulo_puntos():
+def angulo_puntos(): # ver esta funcion porque se esta ejecutando antes que el codigo principal, esta puesta 2 veces en las funcioones
      while True:
          angulos=input("Ingrese los angulos separados por comas:").split(",") 
          if angulos==[""]:
@@ -82,7 +86,7 @@ def get_grid_coords(h, w, dot_size, angle_deg):
     offset_x = cx - (num_x * dot_size) / 2
     offset_y = cy - (num_y * dot_size) / 2
 
-    # recorrer la grilla y calcular las posiciones (geometría 👻) 
+    # recorrer la grilla y calcular las posiciones 
     for i in range(num_y):
         for j in range(num_x):
             gx = offset_x + j * dot_size + dot_size / 2 - cx
@@ -167,136 +171,37 @@ def halftone(img):
 
 
             
-#-------------------------------- K-MEANS ---------------------------------------------
-COLORES_DEFAULT_KMEANS = 8
-
-#Función para pedir k 
-
-def pedir_k():
-   while True:
-       #Se solicita al usuario la cantidad de colores deseados.
-       k = input("Ingrese el numero de colores deseados: ")
-
-       #Si no se ingresa nada, se utilizan por default 8 colores.
-       if k == "":
-           return COLORES_DEFAULT_KMEANS
-       
-       if k.isdigit():
-           return int(k)
-       else:
-           print("La cantidad de colores debe ser un numero.")
-
-
-#Función para crear centroides
-def crear_centroides(img, k):
-    #Se vuelve a pedir las medidas de la foto
-    alto, ancho, canales = img.shape
-
-    #Con una lista vacía se crean centroides
-    centroides = []
-
-    for i in range(k):
-        #Se eligen puntos x,y random dentro del tamaño de la imagen
-        x = random.randint(0, ancho-1)
-        y = random.randint(0, alto-1)
-        centroide = img[x:y: ] #Los canales ya estan definidos??????
-
-        #Se agrega cada color como tupla de enteros por si el array tiene valores np.uint8 o diferentes a int
-        centroides.append((int(centroide[0]), int(centroide[1]), int(centroide[2])))
-
-    return centroides
-
-
-
-#Ambas funciones distancia_colores y calcular_centroides_mas_cercanos
-#Función del calculo de distancia de un color a otro
-def distancia_colores(colorA, colorB):
-    distancia = ( (int(colorA[0]) - int(colorB[0])) ** 2 + (int(colorA[1]) - int(colorB[1])) ** 2 + (int(colorA[2]) - int(colorB[2])) ) ** 0.5
-    return distancia
-
-
-#Función para calcular el centroide que le corresponde a cada pixel.
-def calcular_centroide_mas_cercano(pixel, centroides):
-    centroide_mas_cercano = centroides[0]
-
-    for centroide in centroides:
-        # Evalua las distancias del pixel seleccionado con cada centroide
-        if distancia_colores(pixel, centroide) < distancia_colores(pixel, centroide_mas_cercano):
-            #Si encuentra un pixel mas cercano al nuevo centroide, se reemplaza como el centroide mas cercano.
-            centroide_mas_cercano = centroide
-            
-    return centroide_mas_cercano
-
-
-       
-#Función para calcular los grupos de centroides
-def calcular_grupos(img, centroides):
-    alto, ancho, canales = img.shape
-
-    #Diccionario vacío. El resultado debe verse de la siguiente manera:
-    # grupos = {centroide1: [pixel1, pixel2, pixel3, ...], centroide2: [pixel4, pixel5, pixel6, ...]}
-    # grupos = {(1,2,3): [pixel1, pixel2, pixel3], ...}
-    grupos = {}
-
-    #Se recorre la foto completa
-    for x in range(ancho):
-        for y in range(alto):
-            pixel = img[x:y: ] #Pixel definido por el array de la imagen en las coordenadas(x,y,todo)
-
-            # comentar
-            centroide_mas_cercano = tuple(calcular_centroide_mas_cercano(pixel, centroides))
-
-            #Debo revisar si el centroide ya esta como clave del diccionario
-            #Si el centroide ya esta como clave, agrego el pixel al diccionario
-            if centroide_mas_cercano in grupos:
-                grupos[centroide_mas_cercano].append(pixel)
-            
-            #Sino, creo una clave para el centroide y luego le agrego los pixeles 
-            else:
-                grupos[centroide_mas_cercano] = []
-                grupos[centroide_mas_cercano].append(pixel)
-
-    return grupos
-
-
-
-#Definir función kmeans con lo que devuelven las funciones base
-def kmeans(img):
-    #.shape guarda los valores del filas, columnas y canales
-    alto, ancho, canales = img.shape
-
-    k = pedir_k()
-
-    #Con k definido, se deben crear los centroides.
-    centroides = crear_centroides(img, k)
-
-    #Con los centroides, se deben juntar los centroides en grupos, creo que son los clusters
-    grupos_centroides = calcular_grupos(img, centroides)
 
 
 
 #--------------------------------------------------------------------------------------
 
-def main():
-   #Se solicita al usuario que ingrese la ruta de la imagen
-   ruta_imagen = input("Ingrese la ruta de la imagen: ")
-   img = abrir_imagen(ruta_imagen)
-   
-   #Verificación de una imagen válida
-   if img is None:
-      print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
-      return #que devuelvo?
-   
-   opcion_elegida = elegir_opcion()
-   if opcion_elegida == "halftone":
-        
-        pass #chequear si se puede usar el pass
-   
-   elif opcion_elegida == "kmeans":
-        kmeans(img) #la funcion kmeans recibirá la imagen ingresada y comenzará a trabajar con ese input
-        pass
+
+#Se solicita al usuario que ingrese la ruta de la imagen
+ruta_imagen = input("Ingrese la ruta de la imagen: ")
+imagen = abrir_imagen(ruta_imagen)
+
+while imagen is None:
+    print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
+    ruta_imagen = input("Ingrese la ruta de la imagen: ")
+    imagen = abrir_imagen(ruta_imagen)
 
 
-#llama a la funcion main
-if __name__ == '__main__':
-    main()
+
+opcion_elegida = elegir_opcion()
+
+if opcion_elegida == "halftone":
+    halftone(imagen)
+
+elif opcion_elegida == "kmeans":
+    kmeans(imagen) 
+
+    
+
+
+
+   
+
+
+    
+
