@@ -172,7 +172,11 @@ def pintar_por_grupos(imagen_vieja, nueva_imagen, clusters):
 #Definir función kmeans con lo que devuelven las funciones base.
 def kmeans(img):
     """
-    
+    La función recibe la imagen como array y aplica el algoritmo para reducir la cantidad de colores.
+    Se solicita un valor de k, para generar centroides iniciales y agrupar los pixeles en clusters. 
+    Se itera 100 veces y se actualizan los centroides.
+    Se genera una nueva imagen con los colores representativos.
+    La función no retorna nada, pero guarda la imagen como un archivo nuevo.
     """
     # Se obtienen las dimensiones de la imagen.
     alto, ancho, canales = img.shape
