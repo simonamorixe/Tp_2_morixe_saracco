@@ -206,7 +206,3 @@ def kmeans(img):
 
     # Se guarda la imagen para mostrar el resultado.
     imagen_final.save("resultado.png")
-
-    
-        
-
