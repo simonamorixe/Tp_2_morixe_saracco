@@ -8,6 +8,7 @@ Luego de la ejecución, el usuario decidirá que imagen utilizará como imagen f
 
 ## Composición
 El proyecto esta compuesto por tres archivos de codigo:
+
     - Funciones_halftone.py (funciones que ejecutan el codigo perteneciente al Filtro Halftone)
     - Funciones_kmeans.py (funciones que ejecutan el codigo de la Cuantización K-Means)
     - Fain.py (codigo principal que importa los archivos de funciones y ejecuta el programa completo)
