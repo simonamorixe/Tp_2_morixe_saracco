@@ -104,10 +104,19 @@ def poner_puntosnegros(matriz_base, positions, lista_radios):
         #funcion de math que redondea hacia arriba
         radio_int = math.ceil(radio) 
         
-        for coord_x in range(x - radio_int - 1, x + radio_int + 1): 
+        #recorre el eje x desde un poco antes de la posicion x hasta un poco después de x
+        for coord_x in range(x - radio_int - 1, x + radio_int + 1):
+
+            #idem con el eje y 
             for coord_y in range(y - radio_int - 1, y + radio_int + 1):
+
+                #verifica que no se salga de los limites, si se sale de la matriz salta error
                 if 0 <= coord_x < ancho and 0 <= coord_y < alto:
+
+                    #verificando si el punto actual está dentro del círculo centrado en (x, y)
                     if ((coord_x - x) ** 2) + ((coord_y - y) ** 2) <= radio ** 2:
+
+                        #si cumple el if se pinta de negro el circulo
                         matriz_base[coord_y, coord_x] = 0
 
     return matriz_base
