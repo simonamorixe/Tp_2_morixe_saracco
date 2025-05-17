@@ -44,7 +44,7 @@ Al finalizar, se muestra la imagen y se guarda el resultado para que el usuario 
 
     --> Si se elige la opción de Halftone:
         - El usuario deberá ingresar el tamaño del punto deseado. (Si no hay input, se utilizará el valor default (5).)
-        - El usuario deberá ingresar los angulos deseados, separados por comas. (Si no hay input, se utilizará el valor default ([15,45,0] ).)
+        - El usuario deberá ingresar los angulos deseados, separados por comas. (Si no hay input, se utilizará el valor default ([15,45,0]).)
         - Una vez terminado, se guardará la imagen como un archivo llamando "resultado.png"
 
 
